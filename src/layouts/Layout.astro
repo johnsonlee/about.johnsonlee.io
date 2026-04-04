@@ -41,7 +41,7 @@ const ogImageUrl = new URL(image, Astro.site).toString();
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Johnson Lee" />
+    <meta name="author" content="Johnson Li" />
 
     <!-- Open Graph / Facebook / WeChat -->
     <meta property="og:type" content="profile" />
@@ -49,13 +49,13 @@ const ogImageUrl = new URL(image, Astro.site).toString();
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
     <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
     <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
-    <meta property="og:site_name" content="Johnson Lee" />
+    <meta property="og:site_name" content="Johnson Li" />
     <meta property="profile:first_name" content="Johnson" />
-    <meta property="profile:last_name" content="Lee" />
+    <meta property="profile:last_name" content="Li" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -140,8 +140,8 @@ const ogImageUrl = new URL(image, Astro.site).toString();
         });
         document.documentElement.lang = lang;
         var titles = {
-          zh: '李景森 (Johnson Lee) — Sr. Staff Engineer & Bar Raiser',
-          en: 'Johnson Lee (李景森) — Sr. Staff Engineer & Bar Raiser',
+          zh: '李景森 (Johnson Li) — Sr. Staff Engineer & Bar Raiser',
+          en: 'Johnson Li (李景森) — Sr. Staff Engineer & Bar Raiser',
         };
         document.title = titles[lang] || titles.en;
         var descriptions = {

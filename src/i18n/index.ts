@@ -6,7 +6,7 @@ const translations = { zh, en } as const;
 export type Locale = keyof typeof translations;
 
 export const defaultLocale: Locale = 'en';
-export const locales: Locale[] = ['zh', 'en'];
+export const locales: Locale[] = ['en', 'zh'];
 
 export function t(locale: Locale, key: string): string {
   const keys = key.split('.');

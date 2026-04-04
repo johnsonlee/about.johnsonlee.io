@@ -1,5 +1,5 @@
 ---
-name: Johnson Lee (李景森)
+name: Johnson Li (李景森)
 title: Sr. Staff Engineer & Bar Raiser
 company: Coupang
 location: Seoul

@@ -1,5 +1,5 @@
 ---
-name: 李景森 (Johnson Lee)
+name: 李景森 (Johnson Li)
 title: Sr. Staff Engineer & Bar Raiser
 company: Coupang
 location: 首尔
