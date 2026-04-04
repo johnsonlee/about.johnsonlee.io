@@ -22,7 +22,7 @@ const ogImageUrl = new URL(image, Astro.site).toString();
     <script is:inline>
       (function() {
         const stored = localStorage.getItem('theme');
-        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        if (stored === 'dark' || !stored || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           document.documentElement.classList.add('dark');
         }
       })();
@@ -73,7 +73,7 @@ const ogImageUrl = new URL(image, Astro.site).toString();
       function getTheme() {
         var stored = localStorage.getItem('theme');
         if (stored) return stored;
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        return 'dark';
       }
 
       function applyTheme(theme) {
