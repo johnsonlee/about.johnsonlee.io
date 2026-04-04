@@ -145,8 +145,8 @@ const ogImageUrl = new URL(image, Astro.site).toString();
         };
         document.title = titles[lang] || titles.en;
         var descriptions = {
-          zh: '从全栈工程到 AI 架构，20 年构建复杂系统的实践者。现专注 Agent 架构、LLM 工程化、AI 对软件行业的重塑。',
-          en: 'From full-stack engineering to AI architecture — 20 years of building complex systems. Currently focused on Agent architecture, LLM engineering, and AI transformation.',
+          zh: '20 年横跨系统工程、移动端、AI 三个技术周期，从零构建过基础设施、开源过 5000+ Star 的工具、用 AI 落地过生产级系统。既能定义 What，也能交付 How。',
+          en: '20 years spanning three technology cycles — systems engineering, mobile, and AI. Built infrastructure from zero, open-sourced tools with 5000+ Stars, shipped production AI systems. I define the What and deliver the How.',
         };
         var descMeta = document.querySelector('meta[name="description"]');
         if (descMeta) descMeta.setAttribute('content', descriptions[lang] || descriptions.en);
