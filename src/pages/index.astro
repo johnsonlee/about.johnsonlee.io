@@ -1,0 +1,278 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/Nav.astro';
+import Hero from '@/components/Hero.astro';
+import Section from '@/components/Section.astro';
+import Timeline from '@/components/Timeline.astro';
+import ProjectCard from '@/components/ProjectCard.astro';
+
+import Footer from '@/components/Footer.astro';
+import { t, locales, type Locale } from '@/i18n';
+
+// Data for both languages
+const data: Record<Locale, {
+  name: string;
+  tagline: string;
+  aboutP1: string;
+  aboutP2: string;
+  aiIntro: string;
+  aiTopics: { icon: string; title: string; desc: string; link: string }[];
+  career: { company: string; role: string | string[]; description: string; highlight?: string }[];
+  projects: { name: string; url: string; description: string; stars?: string }[];
+  patents: { label: string; url: string }[];
+  writingItems: { label: string; desc: string; link?: string }[];
+  blogLink: string;
+}> = {
+  zh: {
+    name: '\u674E\u666F\u68EE',
+    tagline: '当 <strong class="text-sky-500">Execution</strong> 变得廉价，<strong class="text-sky-500">Judgment</strong> 才是护城河——但没有 <strong class="text-sky-500">Ground Truth</strong> 的 Judgment，只是猜测',
+    aboutP1: '20 年横跨系统工程、移动端、AI 三个技术周期，从零构建过基础设施、开源过 5000+ Star 的工具、用 AI 落地过生产级系统。既能定义 What，也能交付 How。',
+    aboutP2: '跨界思考是我的工作方式：用编译器的视角理解 LLM，用认知科学解读 AI 意识，用逆向投资的逻辑做技术决策。30+ 篇 AI 深度文章，核心主张——当 Execution 变得廉价，Judgment 才是真正的护城河。',
+    aiIntro: '在 Coupang 落地 Autonomous AB Clean 等生产级 AI 系统，同时输出 30+ 篇深度思考。我关注的不是 AI 能写多少行代码，而是当 Execution 变得廉价后，',
+    aiTopics: [
+      { icon: '🚀', title: 'Autonomous AB Clean', desc: '在 Coupang 落地的 AI 工程实践——自主式 AB 实验清理系统，将 AI Agent 嵌入研发工作流，实现实验生命周期的自动化管理', link: '' },
+      { icon: '🏗️', title: 'Agentic Engineering', desc: '从 Agent 架构设计到 Claude Code 实战，探索人机协作的最优范式。提出 Harness Engineering——在混沌中建立秩序的工程方法论', link: 'https://johnsonlee.io/2026/03/14/harness-engineering-order-from-chaos/' },
+      { icon: '🎯', title: 'Ground Truth 工程', desc: '用概率性工具验证概率性输出等于没验证。AI 时代最被低估的竞争力是构建确定性验证体系', link: 'https://johnsonlee.io/2026/03/28/ground-truth-core-competency-of-ai-engineering/' },
+      { icon: '🔬', title: 'LLM 本质洞察', desc: 'LLM 是函数而非数据库，从编译器到 LLM 的软件分层轮回——用第一性原理理解大模型', link: 'https://johnsonlee.io/2026/02/25/llm-is-a-function/' },
+      { icon: '🌊', title: 'Agent 经济与行业重塑', desc: '当 Agent 成为入口，注意力经济向 ROI 经济转型。App 退守后端基础设施，软件工程迎来最后一次范式革命', link: 'https://johnsonlee.io/2026/02/10/agent-economy-app-future/' },
+      { icon: '⚡', title: 'What Caps How', desc: '能把模糊需求拆解成精确规格的人，是 AI 时代最稀缺的人才。How 的上限取决于 What 的精度', link: 'https://johnsonlee.io/2026/03/10/what-caps-how/' },
+    ],
+    career: [
+      { company: 'Coupang', role: ['Sr. Staff Engineer', 'Bar Raiser'], description: '从零构建全公司移动端基础设施，从零打造 R.LUX 奢侈品 App，用 AI 赋能工程效率。跨团队架构决策、性能瓶颈根因分析、技术债优先级判断；作为 Bar Raiser 独立于 hiring manager 把关每一个招聘决策。', highlight: '定义技术方向，守住人才标准——确保每一个进来的人都能拉高团队的平均水平。' },
+      { company: '\u5FEB\u624B (Kuaishou)', role: 'Staff Engineer', description: '\u5927\u89C4\u6A21\u79FB\u52A8\u7AEF\u67B6\u6784\u8BBE\u8BA1\u4E0E\u6027\u80FD\u4F18\u5316\u3002', highlight: '亿级 DAU 的短视频场景，极致体验优化没有捷径。' },
+      { company: '\u6EF4\u6EF4 (DiDi)', role: 'Staff Engineer', description: '\u4E3B\u5BFC\u53F8/\u4E58\u79FB\u52A8\u7AEF\u4E2D\u53F0\u67B6\u6784\uFF0C开源 Booster 构建优化工具\u3002', highlight: '\u597D\u7684\u57FA\u7840\u8BBE\u65BD\u4E0D\u662F\u88AB\u8BBE\u8BA1\u51FA\u6765\u7684\uFF0C\u662F\u5728\u771F\u5B9E\u4E1A\u52A1\u7684\u538B\u529B\u4E0B\u957F\u51FA\u6765\u7684\u3002' },
+      { company: '\u4E09\u661F (Samsung)', role: '\u8F6F\u4EF6\u5DE5\u7A0B\u5E08', description: 'Smart TV SDK 与 Cloud IDE 开发。', highlight: 'Cloud Native 不是概念，是在这里一行一行写出来的。' },
+      { company: '科泰 (Kortide)', role: '软件工程师', description: '职业生涯的真正起点，扎实的工程基础在这里练就。', highlight: 'IDE、编译器、操作系统——系统工程的底子，是在这里打下的。' },
+    ],
+    projects: [
+      { name: 'didi/booster', url: 'https://github.com/didi/booster', description: 'Android 构建优化工具', stars: '5k+' },
+      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: '轻量级代码生成框架', stars: '60' },
+      { name: 'sonatype-publish-plugin', url: 'https://github.com/johnsonlee/sonatype-publish-plugin', description: 'Gradle 制品发布插件', stars: '27' },
+      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: 'JVM 字节码分析框架', stars: '5' },
+      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: '股票市场趋势识别工具', stars: '' },
+      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI 辩论竞技场', stars: '' },
+    ],
+    patents: [
+      { label: 'Coupang \u97E9\u56FD\u4E13\u5229', url: 'https://patents.google.com/?inventor=%EC%A7%95%EC%84%BC+%EB%A6%AC' },
+      { label: 'Coupang \u53F0\u6E7E\u4E13\u5229', url: 'https://patents.google.com/?inventor=%E6%9D%8E%E6%99%AF%E6%A3%AE&assignee=%E9%9F%93%E5%95%86%E9%9F%93%E9%A0%98%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8' },
+      { label: '\u5FEB\u624B\u4E13\u5229', url: 'https://patents.google.com/?inventor=%E6%9D%8E%E6%99%AF%E6%A3%AE&assignee=%E5%8C%97%E4%BA%AC%E8%BE%BE%E4%BD%B3%E4%BA%92%E8%81%94%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8' },
+    ],
+    writingItems: [
+      { label: 'Ground Truth：AI 时代最被低估的竞争力', desc: '用概率性工具验证概率性输出，等于没验证', link: 'https://johnsonlee.io/2026/03/28/ground-truth-core-competency-of-ai-engineering/' },
+      { label: 'Harness Engineering：在混沌中建立秩序', desc: '当 AI Agent 不可预测，工程师的角色从执行者变为驯兽师', link: 'https://johnsonlee.io/2026/03/14/harness-engineering-order-from-chaos/' },
+      { label: 'What Caps How', desc: '能把模糊需求拆解成精确规格的人，是 AI 时代最稀缺的人才', link: 'https://johnsonlee.io/2026/03/10/what-caps-how/' },
+      { label: 'LLM 的本质——函数', desc: '用第一性原理拆解大模型，Attention 就是可学习的加权求和', link: 'https://johnsonlee.io/2026/02/25/llm-is-a-function/' },
+      { label: '当 Agent 成为入口，App 何去何从？', desc: '注意力经济向 ROI 经济转型的终局推演', link: 'https://johnsonlee.io/2026/02/10/agent-economy-app-future/' },
+    ],
+    blogLink: '\u9605\u8BFB\u6211\u7684\u535A\u5BA2',
+  },
+  en: {
+    name: 'Johnson',
+    tagline: 'When <strong class="text-sky-500">Execution</strong> becomes cheap, <strong class="text-sky-500">Judgment</strong> is the moat — but Judgment without <strong class="text-sky-500">Ground Truth</strong> is just guessing',
+    aboutP1: "20 years spanning three technology cycles — systems engineering, mobile, and AI. Built infrastructure from zero, open-sourced tools with 5000+ Stars, shipped production AI systems. I define the What and deliver the How.",
+    aboutP2: "Cross-domain thinking is how I work: understanding LLMs through the lens of compilers, interpreting AI consciousness through cognitive science, making technical decisions with a contrarian investor's logic. 30+ deep-dive articles on AI, one core thesis — when Execution becomes cheap, Judgment is the real moat.",
+    aiIntro: "Shipping production AI systems like Autonomous AB Clean at Coupang, while producing 30+ deep-dive articles. What I care about is not how many lines of code AI can write, but ",
+    aiTopics: [
+      { icon: '🚀', title: 'Autonomous AB Clean', desc: 'Production AI practice at Coupang — an autonomous AB experiment cleanup system that embeds AI Agents into the development workflow, automating experiment lifecycle management', link: '' },
+      { icon: '🏗️', title: 'Agentic Engineering', desc: 'From Agent architecture to hands-on Claude Code practice, exploring optimal human-AI collaboration. Proposed "Harness Engineering" — building order from chaos', link: 'https://johnsonlee.io/2026/03/14/harness-engineering-order-from-chaos/' },
+      { icon: '🎯', title: 'Ground Truth Engineering', desc: 'Using probabilistic tools to verify probabilistic outputs equals no verification. The most underrated AI-era advantage: deterministic validation systems', link: 'https://johnsonlee.io/2026/03/28/ground-truth-core-competency-of-ai-engineering/' },
+      { icon: '🔬', title: 'LLM First Principles', desc: 'LLMs are functions, not databases. From compilers to LLMs — understanding the cyclical nature of software abstraction layers', link: 'https://johnsonlee.io/2026/02/25/llm-is-a-function/' },
+      { icon: '🌊', title: 'Agent Economy & Industry Shift', desc: 'When Agents become the entry point, attention economy pivots to ROI economy. Apps retreat to backend infrastructure; software engineering faces its final paradigm revolution', link: 'https://johnsonlee.io/2026/02/10/agent-economy-app-future/' },
+      { icon: '⚡', title: 'What Caps How', desc: 'Those who can decompose vague requirements into precise specifications are the scarcest talent in the AI era. The ceiling of How depends on the precision of What', link: 'https://johnsonlee.io/2026/03/10/what-caps-how/' },
+    ],
+    career: [
+      { company: 'Coupang', role: ['Sr. Staff Engineer', 'Bar Raiser'], description: 'Built company-wide mobile infra from scratch, launched R.LUX luxury app from scratch, empowered engineering with AI. Cross-team architecture decisions, root cause analysis of performance bottlenecks, tech debt prioritization; as Bar Raiser, making independent hiring judgments beyond the hiring manager.', highlight: "Defining technical direction, upholding talent standards — ensuring every new hire raises the bar." },
+      { company: 'Kuaishou', role: 'Staff Engineer', description: 'Large-scale mobile architecture design and performance optimization.', highlight: 'With hundreds of millions of DAU in short-video, there are no shortcuts to peak experience optimization.' },
+      { company: 'DiDi', role: 'Staff Engineer', description: 'Led driver/rider mobile platform architecture and open-sourced the Booster build optimization tool (5000+ GitHub Stars).', highlight: "Solid infrastructure isn't designed \u2014 it emerges under real business pressure." },
+      { company: 'Samsung', role: 'Software Engineer', description: 'Smart TV SDK & Cloud IDE development.', highlight: "Cloud Native wasn't a buzzword here — it was built line by line." },
+      { company: 'Kortide', role: 'Software Engineer', description: 'Where it truly began — a solid engineering foundation was forged here.', highlight: 'IDE, compilers, operating systems — the foundation of systems engineering was laid here.' },
+    ],
+    projects: [
+      { name: 'didi/booster', url: 'https://github.com/didi/booster', description: 'Android build optimization tool', stars: '5k+' },
+      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: 'Lightweight code generation framework', stars: '60' },
+      { name: 'sonatype-publish-plugin', url: 'https://github.com/johnsonlee/sonatype-publish-plugin', description: 'Gradle plugin for publishing artifacts', stars: '27' },
+      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: 'JVM bytecode analysis framework', stars: '5' },
+      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: 'Equity market trend identification tool', stars: '' },
+      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI debate arena', stars: '' },
+    ],
+    patents: [
+      { label: 'Coupang Korea Patents', url: 'https://patents.google.com/?inventor=%EC%A7%95%EC%84%BC+%EB%A6%AC' },
+      { label: 'Coupang Taiwan Patents', url: 'https://patents.google.com/?inventor=%E6%9D%8E%E6%99%AF%E6%A3%AE&assignee=%E9%9F%93%E5%95%86%E9%9F%93%E9%A0%98%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8' },
+      { label: 'Kuaishou Patents', url: 'https://patents.google.com/?inventor=%E6%9D%8E%E6%99%AF%E6%A3%AE&assignee=%E5%8C%97%E4%BA%AC%E8%BE%BE%E4%BD%B3%E4%BA%92%E8%81%94%E4%BF%A1%E6%81%AF%E6%8A%80%E6%9C%AF%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8' },
+    ],
+    writingItems: [
+      { label: 'Ground Truth: The Most Underrated AI Advantage', desc: 'Using probabilistic tools to verify probabilistic outputs equals no verification', link: 'https://johnsonlee.io/2026/03/28/ground-truth-core-competency-of-ai-engineering/' },
+      { label: 'Harness Engineering: Order from Chaos', desc: 'When AI Agents are unpredictable, engineers shift from executors to tamers', link: 'https://johnsonlee.io/2026/03/14/harness-engineering-order-from-chaos/' },
+      { label: 'What Caps How', desc: 'Those who decompose vague requirements into precise specs are the scarcest AI-era talent', link: 'https://johnsonlee.io/2026/03/10/what-caps-how/' },
+      { label: 'The Essence of LLM — A Function', desc: 'Deconstructing LLMs from first principles: Attention is a learnable weighted sum', link: 'https://johnsonlee.io/2026/02/25/llm-is-a-function/' },
+      { label: 'When Agents Become the Entry Point', desc: 'The endgame of attention economy pivoting to ROI economy', link: 'https://johnsonlee.io/2026/02/10/agent-economy-app-future/' },
+    ],
+    blogLink: 'Read my blog',
+  },
+};
+
+const aiHighlight: Record<Locale, string> = {
+  zh: 'Judgment \u5982\u4F55\u6210\u4E3A\u6838\u5FC3\u7ADE\u4E89\u529B',
+  en: 'how Judgment becomes the core competitive advantage',
+};
+---
+
+<Layout
+  title={t('zh', 'meta.title')}
+  description={t('zh', 'meta.description')}
+  locale="zh"
+  alternateLocale="en"
+  alternatePath="/?lang=en"
+>
+  <Nav />
+
+  {locales.map(locale => (
+    <div data-lang={locale} class="hidden">
+      <Hero locale={locale} name={data[locale].name} title="Sr. Staff Engineer & Bar Raiser" company="Coupang" tagline={data[locale].tagline} />
+
+      <!-- About -->
+      <Section id="about" title={t(locale, 'sections.about')}>
+        <div class="glass-card">
+          <p class="text-slate-600 dark:text-slate-300 leading-relaxed mb-4">{data[locale].aboutP1}</p>
+          <p class="text-slate-500 dark:text-slate-400 leading-relaxed">{data[locale].aboutP2}</p>
+        </div>
+      </Section>
+
+      <!-- Social Proof -->
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+        <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-center">
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">5000+</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">GitHub Stars</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">30+</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">{locale === 'zh' ? 'AI 深度文章' : 'AI Deep-Dives'}</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">20+</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">{locale === 'zh' ? '年工程经验' : 'Years Engineering'}</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">445+</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">GitHub Followers</div>
+          </div>
+          <div>
+            <div class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white text-nowrap">🏆 Arctic Vault</div>
+            <div class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Contributor</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Core Thesis -->
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 py-16 text-center">
+        <blockquote class="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 dark:text-white leading-relaxed">
+          {locale === 'zh'
+            ? '"How 的上限，取决于 What 的精度。"'
+            : '"The ceiling of How depends on the precision of What."'}
+        </blockquote>
+        <p class="mt-4 text-sm text-slate-400 dark:text-slate-500">— Johnson</p>
+      </div>
+
+      <!-- AI -->
+      <Section id="ai" title={t(locale, 'sections.ai')}>
+        <p class="text-slate-500 dark:text-slate-400 mb-8">
+          {data[locale].aiIntro}<strong class="text-sky-600 dark:text-sky-400">{aiHighlight[locale]}</strong>
+          {locale === 'zh' ? '\u3002' : ' when Execution becomes cheap.'}
+        </p>
+        <div class="grid md:grid-cols-2 gap-4">
+          {data[locale].aiTopics.map(topic => (
+            <a href={topic.link} target="_blank" rel="noopener" class="glass-card block group">
+              <div class="flex items-start gap-3">
+                <span class="text-2xl">{topic.icon}</span>
+                <div>
+                  <h3 class="text-slate-900 dark:text-white font-semibold mb-1 group-hover:text-sky-400 transition-colors">{topic.title}</h3>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm">{topic.desc}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <!-- Open Source -->
+      <Section id="opensource" title={t(locale, 'sections.opensource')}>
+        <div class="grid md:grid-cols-2 gap-4">
+          {data[locale].projects.map(p => (
+            <ProjectCard {...p} />
+          ))}
+        </div>
+      </Section>
+
+      <!-- Career -->
+      <Section id="career" title={t(locale, 'sections.career')}>
+        <Timeline items={data[locale].career} />
+      </Section>
+
+      <!-- Patents -->
+      <Section id="patents" title={t(locale, 'sections.patents')}>
+        <div class="glass-card">
+          <ul class="space-y-3">
+            {data[locale].patents.map(p => (
+              <li>
+                <a href={p.url} target="_blank" rel="noopener" class="text-slate-600 dark:text-slate-300 hover:text-sky-400 transition-colors flex items-center gap-2">
+                  <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                  {p.label}
+                  <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <!-- Writing -->
+      <Section id="writing" title={t(locale, 'sections.writing')}>
+        <div class="glass-card">
+          <div class="space-y-3">
+            {data[locale].writingItems.map((item) => (
+              <a href={item.link} target="_blank" rel="noopener" class="flex items-start gap-3 py-2 group">
+                <span class="w-1.5 h-1.5 rounded-full bg-sky-500 mt-2 shrink-0" />
+                <div>
+                  <span class="text-slate-900 dark:text-white font-medium group-hover:text-sky-400 transition-colors">{item.label}</span>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm mt-0.5">{item.desc}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+          <a href="https://johnsonlee.io" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-6 text-sky-600 dark:text-sky-400 hover:text-sky-500 dark:hover:text-sky-300 transition-colors text-sm font-medium">
+            {data[locale].blogLink}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+        </div>
+      </Section>
+
+      <!-- Contact -->
+      <Section id="contact" title={t(locale, 'sections.contact')}>
+        <p class="text-slate-500 dark:text-slate-400 mb-8">
+          {locale === 'zh' ? '有想法？写封邮件聊聊。技术合作、内容共创、行业交流都欢迎。' : 'Got ideas? Drop me an email. Open to technical collaboration, content co-creation, and industry exchange.'}
+        </p>
+        <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <a href="mailto:g.johnsonlee@gmail.com" class="glass-card text-center group">
+            <div class="text-2xl mb-2">{'\u{2709}\u{FE0F}'}</div>
+            <div class="text-sm text-slate-400 group-hover:text-sky-400 transition-colors">Email</div>
+          </a>
+          <a href="https://github.com/johnsonlee" target="_blank" rel="noopener" class="glass-card text-center group">
+            <div class="text-2xl mb-2">{'\u{1F419}'}</div>
+            <div class="text-sm text-slate-400 group-hover:text-sky-400 transition-colors">GitHub</div>
+          </a>
+          <a href="https://johnsonlee.io" target="_blank" rel="noopener" class="glass-card text-center group">
+            <div class="text-2xl mb-2">{'\u{1F4D6}'}</div>
+            <div class="text-sm text-slate-400 group-hover:text-sky-400 transition-colors">Blog</div>
+          </a>
+          <a href="https://medium.com/@johnson.lee" target="_blank" rel="noopener" class="glass-card text-center group">
+            <div class="text-2xl mb-2">{'\u{1F4DD}'}</div>
+            <div class="text-sm text-slate-400 group-hover:text-sky-400 transition-colors">Medium</div>
+          </a>
+        </div>
+      </Section>
+    </div>
+  ))}
+
+  <Footer />
+</Layout>

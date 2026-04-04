@@ -1,0 +1,15 @@
+---
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+
+<section id={id} class="py-20 scroll-mt-8 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6">
+    <h2 class="section-heading">{title}</h2>
+    <slot />
+  </div>
+</section>

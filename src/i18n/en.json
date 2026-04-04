@@ -1,0 +1,47 @@
+{
+  "nav": {
+    "about": "About",
+    "ai": "AI Practice",
+    "career": "Career",
+    "opensource": "Open Source",
+    "patents": "Patents",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "cta": "Learn More"
+  },
+  "sections": {
+    "about": "About Me",
+    "ai": "AI Expertise & Practice",
+    "current": "Current Work",
+    "career": "Career Journey",
+    "opensource": "Open Source",
+    "patents": "Patents",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "contact": {
+    "email": "Email",
+    "github": "GitHub",
+    "blog": "Blog",
+    "medium": "Medium"
+  },
+  "lang": {
+    "switch": "中文",
+    "current": "English"
+  },
+  "share": {
+    "title": "Share",
+    "wechat": "WeChat",
+    "twitter": "Twitter",
+    "linkedin": "LinkedIn",
+    "copy": "Copy Link",
+    "copied": "Copied!"
+  },
+  "meta": {
+    "title": "Johnson Lee (李景森) — Sr. Staff Engineer & Bar Raiser",
+    "description": "From full-stack engineering to AI architecture — 20 years of building complex systems. Currently focused on Agent architecture, LLM engineering, and AI's transformation of the software industry."
+  }
+}

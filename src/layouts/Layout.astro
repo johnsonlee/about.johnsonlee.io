@@ -1,0 +1,237 @@
+---
+import '@/styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  locale: string;
+  alternateLocale: string;
+  alternatePath: string;
+  image?: string;
+}
+
+const { title, description, locale, alternateLocale, alternatePath, image = '/og-image.png' } = Astro.props;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+const ogImageUrl = new URL(image, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <!-- Theme: prevent flash -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('theme');
+        if (stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" hreflang={alternateLocale} href={alternatePath} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Johnson Lee" />
+
+    <!-- Open Graph / Facebook / WeChat -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={locale === 'zh' ? 'zh_CN' : 'en_US'} />
+    <meta property="og:locale:alternate" content={locale === 'zh' ? 'en_US' : 'zh_CN'} />
+    <meta property="og:site_name" content="Johnson Lee" />
+    <meta property="profile:first_name" content="Johnson" />
+    <meta property="profile:last_name" content="Lee" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalUrl} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageUrl} />
+  </head>
+  <body class="min-h-screen overflow-x-hidden">
+    <slot />
+
+    <!-- i18n & Share Scripts -->
+    <script is:inline>
+      // Theme toggle
+      function getTheme() {
+        var stored = localStorage.getItem('theme');
+        if (stored) return stored;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applyTheme(theme) {
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        var sunIcon = document.getElementById('theme-sun');
+        var moonIcon = document.getElementById('theme-moon');
+        if (sunIcon && moonIcon) {
+          sunIcon.classList.toggle('hidden', theme === 'light');
+          moonIcon.classList.toggle('hidden', theme === 'dark');
+        }
+      }
+
+      applyTheme(getTheme());
+
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('theme-toggle')?.addEventListener('click', function() {
+          var current = getTheme();
+          var next = current === 'dark' ? 'light' : 'dark';
+          localStorage.setItem('theme', next);
+          applyTheme(next);
+        });
+
+      // Mobile menu toggle
+      var mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+      var mobileMenu = document.getElementById('mobile-menu');
+      var menuOpenIcon = document.getElementById('menu-open-icon');
+      var menuCloseIcon = document.getElementById('menu-close-icon');
+      if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+          menuOpenIcon.classList.toggle('hidden');
+          menuCloseIcon.classList.toggle('hidden');
+        });
+        // Close menu when clicking a nav link
+        mobileMenu.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobileMenu.classList.add('hidden');
+            menuOpenIcon.classList.remove('hidden');
+            menuCloseIcon.classList.add('hidden');
+          });
+        });
+      }
+
+      function getLang() {
+        var param = new URLSearchParams(window.location.search).get('lang');
+        if (param) return param;
+        var stored = localStorage.getItem('lang');
+        if (stored) return stored;
+        var browserLang = navigator.language || '';
+        return browserLang.startsWith('zh') ? 'zh' : 'en';
+      }
+
+      function applyLang(lang) {
+        document.querySelectorAll('[data-lang]').forEach(function(el) {
+          if (el.getAttribute('data-lang') === lang) {
+            el.classList.remove('hidden');
+          } else {
+            el.classList.add('hidden');
+          }
+        });
+        document.documentElement.lang = lang;
+        var titles = {
+          zh: '李景森 (Johnson Lee) — Sr. Staff Engineer & Bar Raiser',
+          en: 'Johnson Lee (李景森) — Sr. Staff Engineer & Bar Raiser',
+        };
+        document.title = titles[lang] || titles.en;
+        var descriptions = {
+          zh: '从全栈工程到 AI 架构，20 年构建复杂系统的实践者。现专注 Agent 架构、LLM 工程化、AI 对软件行业的重塑。',
+          en: 'From full-stack engineering to AI architecture — 20 years of building complex systems. Currently focused on Agent architecture, LLM engineering, and AI transformation.',
+        };
+        var descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta) descMeta.setAttribute('content', descriptions[lang] || descriptions.en);
+        var ogTitle = document.querySelector('meta[property="og:title"]');
+        if (ogTitle) ogTitle.setAttribute('content', titles[lang] || titles.en);
+        var ogDesc = document.querySelector('meta[property="og:description"]');
+        if (ogDesc) ogDesc.setAttribute('content', descriptions[lang] || descriptions.en);
+        var ogLocale = document.querySelector('meta[property="og:locale"]');
+        if (ogLocale) ogLocale.setAttribute('content', lang === 'zh' ? 'zh_CN' : 'en_US');
+      }
+
+      applyLang(getLang());
+
+      // Language switch
+      document.getElementById('lang-switch').addEventListener('click', function() {
+        var current = getLang();
+        var next = current === 'zh' ? 'en' : 'zh';
+        localStorage.setItem('lang', next);
+        var url = new URL(window.location.href);
+        url.searchParams.set('lang', next);
+        window.history.pushState({}, '', url.toString());
+        applyLang(next);
+      });
+
+      // Handle browser back/forward
+      window.addEventListener('popstate', function() {
+        applyLang(getLang());
+      });
+
+      // Smooth scroll for nav links
+      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          var href = anchor.getAttribute('href');
+          if (!href) return;
+          var targets = document.querySelectorAll(href);
+          for (var i = 0; i < targets.length; i++) {
+            if (!targets[i].closest('[data-lang].hidden')) {
+              targets[i].scrollIntoView({ behavior: 'smooth', block: 'start' });
+              break;
+            }
+          }
+        });
+      });
+
+      // Share functionality
+      document.querySelectorAll('[data-share="copy"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          navigator.clipboard.writeText(window.location.href);
+          btn.classList.add('text-amber-400');
+          setTimeout(function() { btn.classList.remove('text-amber-400'); }, 2000);
+        });
+      });
+
+      document.querySelectorAll('[data-share="wechat"]').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          var modal = document.getElementById('wechat-modal');
+          if (modal) modal.classList.toggle('hidden');
+        });
+      });
+
+      var closeBtn = document.getElementById('wechat-modal-close');
+      if (closeBtn) closeBtn.addEventListener('click', function() {
+        document.getElementById('wechat-modal').classList.add('hidden');
+      });
+
+      // QR code for WeChat
+      var qrImg = document.getElementById('wechat-qr-img');
+      if (qrImg) {
+        qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=192x192&data=' + encodeURIComponent(window.location.href);
+      }
+
+      // Intersection observer for fade-in
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach(function(el) { observer.observe(el); });
+
+      }); // end DOMContentLoaded
+    </script>
+  </body>
+</html>
