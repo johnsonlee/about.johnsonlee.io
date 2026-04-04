@@ -1,13 +1,16 @@
 ---
 import { t, locales, type Locale } from '@/i18n';
 
-const navItems = [
+const navItems: { key?: string; label?: string; href: string; external?: boolean }[] = [
   { key: 'about', href: '#about' },
   { key: 'ai', href: '#ai' },
   { key: 'opensource', href: '#opensource' },
   { key: 'career', href: '#career' },
+  { key: 'writing', href: '#writing' },
   { key: 'contact', href: '#contact' },
 ];
+
+const linkClass = "text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors";
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-white/5">
@@ -19,13 +22,17 @@ const navItems = [
     <!-- Desktop nav -->
     <div class="hidden md:flex items-center gap-6">
       {navItems.map(item => (
-        <>
-          {locales.map(locale => (
-            <a href={item.href} data-lang={locale} class="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors hidden">
-              {t(locale, `nav.${item.key}`)}
-            </a>
-          ))}
-        </>
+        item.external ? (
+          <a href={item.href} target="_blank" rel="noopener" class={linkClass}>{item.label}</a>
+        ) : (
+          <>
+            {locales.map(locale => (
+              <a href={item.href} data-lang={locale} class={`${linkClass} hidden`}>
+                {t(locale, `nav.${item.key}`)}
+              </a>
+            ))}
+          </>
+        )
       ))}
     </div>
 
@@ -52,13 +59,17 @@ const navItems = [
   <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-white/5 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md">
     <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-3">
       {navItems.map(item => (
-        <>
-          {locales.map(locale => (
-            <a href={item.href} data-lang={locale} class="mobile-nav-link text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors py-2 hidden">
-              {t(locale, `nav.${item.key}`)}
-            </a>
-          ))}
-        </>
+        item.external ? (
+          <a href={item.href} target="_blank" rel="noopener" class={`mobile-nav-link ${linkClass} py-2`}>{item.label}</a>
+        ) : (
+          <>
+            {locales.map(locale => (
+              <a href={item.href} data-lang={locale} class={`mobile-nav-link ${linkClass} py-2 hidden`}>
+                {t(locale, `nav.${item.key}`)}
+              </a>
+            ))}
+          </>
+        )
       ))}
     </div>
   </div>
