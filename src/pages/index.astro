@@ -18,7 +18,7 @@ const data: Record<Locale, {
   aiIntro: string;
   aiTopics: { icon: string; title: string; desc: string; link: string }[];
   career: { company: string; role: string | string[]; description: string; highlight?: string }[];
-  projects: { name: string; url: string; description: string; stars?: string }[];
+  projects: { name: string; url: string; description: string; stars?: string; hot?: boolean }[];
   patents: { label: string; url: string }[];
   writingItems: { label: string; desc: string; link?: string }[];
   blogLink: string;
@@ -46,11 +46,11 @@ const data: Record<Locale, {
     ],
     projects: [
       { name: 'didi/booster', url: 'https://github.com/didi/booster', description: 'Android 构建优化工具', stars: '5k+' },
-      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: '轻量级代码生成框架', stars: '60' },
-      { name: 'sonatype-publish-plugin', url: 'https://github.com/johnsonlee/sonatype-publish-plugin', description: 'Gradle 制品发布插件', stars: '27' },
-      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: '将 JVM 字节码转化为可查询的程序图，让 AI Agent 高效理解代码库', stars: '5' },
-      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: '股票市场趋势识别工具', stars: '' },
-      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI 辩论竞技场', stars: '' },
+      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: '将 JVM 字节码转化为可查询的程序图，让 AI Agent 高效理解代码库', hot: true },
+      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI 辩论竞技场', hot: true },
+      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: '股票市场趋势识别工具', hot: true },
+      { name: 'glyphis', url: 'https://github.com/johnsonlee/glyphis', description: '跨平台应用框架，基于 SolidJS 响应性 + Yoga 弹性布局 + 2D 渲染，无需 DOM/WebView', hot: true },
+      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: '轻量级代码生成框架', hot: true },
     ],
     patents: [
       { label: 'Coupang \u97E9\u56FD\u4E13\u5229', url: 'https://patents.google.com/?inventor=%EC%A7%95%EC%84%BC+%EB%A6%AC' },
@@ -89,11 +89,11 @@ const data: Record<Locale, {
     ],
     projects: [
       { name: 'didi/booster', url: 'https://github.com/didi/booster', description: 'Android build optimization tool', stars: '5k+' },
-      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: 'Lightweight code generation framework', stars: '60' },
-      { name: 'sonatype-publish-plugin', url: 'https://github.com/johnsonlee/sonatype-publish-plugin', description: 'Gradle plugin for publishing artifacts', stars: '27' },
-      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: 'Turns JVM bytecode into a queryable program graph for AI agents to understand codebases efficiently', stars: '5' },
-      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: 'Equity market trend identification tool', stars: '' },
-      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI debate arena', stars: '' },
+      { name: 'graphite', url: 'https://github.com/johnsonlee/graphite', description: 'Turns JVM bytecode into a queryable program graph for AI agents to understand codebases efficiently', hot: true },
+      { name: 'agora', url: 'https://github.com/johnsonlee/agora', description: 'AI vs AI debate arena', hot: true },
+      { name: 'athene', url: 'https://github.com/johnsonlee/athene', description: 'Equity market trend identification tool', hot: true },
+      { name: 'glyphis', url: 'https://github.com/johnsonlee/glyphis', description: 'Cross-platform app framework powered by SolidJS reactivity, Yoga flexbox, and 2D rendering — no DOM or WebView', hot: true },
+      { name: 'codegen', url: 'https://github.com/johnsonlee/codegen', description: 'Lightweight code generation framework', hot: true },
     ],
     patents: [
       { label: 'Coupang Korea Patents', url: 'https://patents.google.com/?inventor=%EC%A7%95%EC%84%BC+%EB%A6%AC' },

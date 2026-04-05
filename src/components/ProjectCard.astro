@@ -4,9 +4,10 @@ interface Props {
   url: string;
   description: string;
   stars?: string;
+  hot?: boolean;
 }
 
-const { name, url, description, stars } = Astro.props;
+const { name, url, description, stars, hot } = Astro.props;
 ---
 
 <a href={url} target="_blank" rel="noopener" class="glass-card block group">
@@ -22,6 +23,11 @@ const { name, url, description, stars } = Astro.props;
       <span class="flex items-center gap-1 text-amber-400 text-sm whitespace-nowrap">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         {stars}
+      </span>
+    )}
+    {hot && !stars && (
+      <span class="flex items-center text-orange-400 text-sm">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 23c-3.6 0-8-2.4-8-7.7 0-3.5 2.1-6.4 4-8.8.6-.8 1.8-.3 1.7.7-.2 2.3.5 4 2.2 5.4.2.2.6 0 .5-.3-.3-1.5-.1-3.5 1.1-5.5C15.1 4.1 13 1.6 12.8 1.3c-.4-.5.1-1.2.7-1 1.1.4 6.5 3.6 7.9 8 .5 1.5.6 3 .3 4.5C21 16.7 18.5 23 12 23z"/></svg>
       </span>
     )}
   </div>
